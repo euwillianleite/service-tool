@@ -1,0 +1,17 @@
+{
+  "name": "servico-whatsapp",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "dev": "vercel dev"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "@vercel/node": "^5.1.14",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.118.0"
+  }
+}
