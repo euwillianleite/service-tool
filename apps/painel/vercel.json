@@ -1,4 +1,4 @@
 { "crons": [
   { "path": "/api/cron/recorrencias", "schedule": "0 9 * * *" },
-  { "path": "/api/cron/webhooks", "schedule": "*/5 * * * *" }
+  { "path": "/api/cron/webhooks", "schedule": "30 9 * * *" }
 ] }
