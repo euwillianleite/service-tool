@@ -14,9 +14,15 @@ export async function enviarTexto(para: string, texto: string) { const j = await
 export async function enviarLink(para: string, texto: string, link: string) { const j = await post("send-link", { phone: para, message: `${texto}\n${link}`, linkUrl: link, title: "Abrir", linkDescription: link }); return j.messageId ?? j.zaapId ?? ""; }
 export async function enviarImagem(para: string, imagemUrl: string, legenda?: string) { const j = await post("send-image", { phone: para, image: imagemUrl, caption: legenda }); return j.messageId ?? j.zaapId ?? ""; }
 
-export async function listarGrupos(): Promise<{ id: string; nome: string }[]> {
-  const r = await fetch(`${base()}/groups?page=1&pageSize=200`, { headers: headers() });
-  if (!r.ok) throw new Error("zapi/groups " + r.status);
-  const j = (await r.json()) as { phone: string; name: string }[];
-  return j.map((g) => ({ id: g.phone, nome: g.name }));
+export async function listarGrupos(): Promise<{ id: string; nome: string; participantes?: number }[]> {
+  const out: { id: string; nome: string; participantes?: number }[] = [];
+  for (let page = 1; page <= 10; page++) {
+    const r = await fetch(`${base()}/groups?page=${page}&pageSize=100`, { headers: headers() });
+    if (!r.ok) throw new Error("zapi/groups " + r.status);
+    const j = (await r.json()) as { phone: string; name: string; participants?: unknown[] }[];
+    if (!Array.isArray(j) || !j.length) break;
+    out.push(...j.map((g) => ({ id: g.phone, nome: g.name, participantes: Array.isArray(g.participants) ? g.participants.length : undefined })));
+    if (j.length < 100) break;
+  }
+  return out;
 }

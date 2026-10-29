@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const links = [["/tarefas", "Tarefas"], ["/clientes", "Clientes"], ["/fluxos", "Modelos de fluxo"], ["/equipe", "Equipe"], ["/conversas", "Conversas"]];
+const links = [["/tarefas", "Tarefas"], ["/clientes", "Clientes"], ["/fluxos", "Modelos de fluxo"], ["/equipe", "Equipe"], ["/conversas", "Conversas"], ["/vinculos", "Vínculos"]];
 
 export function NavLinks() {
   const p = usePathname();
